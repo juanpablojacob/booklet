@@ -1,0 +1,21 @@
+.searchLink {
+  margin-block-end: 16px;
+}
+
+.count {
+  margin-block-end: 8px;
+}
+
+.progress {
+  width: 100%;
+  height: 16px;
+  background-color: #d0e7e6;
+  margin-block-end: 32px;
+}
+
+.progressBar {
+  width: var(--progress, 0%);
+  height: 100%;
+  background-color: #4382df;
+  transition: width 0.4s ease-in-out;
+}
