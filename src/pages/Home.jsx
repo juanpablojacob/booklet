@@ -47,6 +47,9 @@ export default function Home() {
       <p className={styles.searchLink}>
         <Link to="/search">Search stickers</Link>
       </p>
+      <p className={styles.searchLink}>
+        <Link to="/new">Register new stickers</Link>
+      </p>
 
       <p className={styles.count}>
         {stickersCount} of {STICKERS_TOTAL_COUNT} stickers (
