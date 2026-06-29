@@ -54,7 +54,14 @@ export default function Search() {
       </p>
       <label className={styles.search}>
         <span>Search by sticker code</span>
-        <input type="text" value={search} onChange={handleSearch} />
+        <input
+          type="text"
+          autoCapitalize="characters"
+          autoCorrect="off"
+          spellCheck="false"
+          value={search}
+          onChange={handleSearch}
+        />
       </label>
       {results.length > 0 && (
         <>

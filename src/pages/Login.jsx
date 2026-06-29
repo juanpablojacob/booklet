@@ -29,7 +29,13 @@ export default function Login() {
       <form className={styles.form} autoComplete="off" onSubmit={onSubmit}>
         <label className={styles.field}>
           <span>Name</span>
-          <input type="text" name="name" />
+          <input
+            type="text"
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck="false"
+            name="name"
+          />
         </label>
         <button type="submit">Sign In</button>
       </form>

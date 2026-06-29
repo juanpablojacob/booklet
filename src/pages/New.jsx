@@ -45,7 +45,14 @@ export default function New() {
       <form className={styles.form} onSubmit={handleSubmit}>
         <label className={styles.field}>
           <span>Add the sticker codes</span>
-          <input type="text" value={codes} onChange={handleInput} />
+          <input
+            type="text"
+            autoCapitalize="characters"
+            autoCorrect="off"
+            spellCheck="false"
+            value={codes}
+            onChange={handleInput}
+          />
         </label>
         <button disabled={!codes} type="submit">
           Save
