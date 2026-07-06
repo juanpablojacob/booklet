@@ -1,13 +1,25 @@
-.form,
-.field {
+.form {
+  width: 400px;
+  margin: 40px auto;
+  background-color: var(--color-white-1);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: rgba(150, 160, 165, 0.2) 0px 8px 24px;
   display: flex;
   flex-direction: column;
 }
 
-.form {
-  gap: 16px;
+.form > h1 {
+  text-align: center;
+  color: var(--color-primary-4);
 }
 
-.field {
+.form > label {
+  display: flex;
+  flex-direction: column;
   gap: 4px;
+}
+
+.form > button {
+  margin-block-start: 40px;
 }

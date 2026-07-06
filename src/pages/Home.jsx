@@ -1,31 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
 
-import { supabase } from "../utils/supabase.js";
-import { getUser } from "../utils/user.js";
-import { STICKERS_TOTAL_COUNT } from "../constants.js";
-import StickersCountTable from "../components/StickersCountTable.jsx";
+import useStickers from "../hooks/useStickers";
+import { STICKERS_TOTAL_COUNT } from "../constants";
 
 import styles from "./Home.module.css";
 
 export default function Home() {
-  const [userStickers, setUserStickers] = useState([]);
+  const { data: stickers } = useStickers();
 
-  useEffect(() => {
-    async function getStickers() {
-      const { data, error } = await supabase
-        .from("stickers")
-        .select()
-        .eq("user_id", getUser().id);
-      if (data) {
-        setUserStickers(data);
-      }
-    }
-
-    getStickers();
-  }, []);
-
-  const stickersCount = useMemo(() => userStickers.length, [userStickers]);
+  const stickersCount = useMemo(() => stickers?.length ?? 0, [stickers]);
   const completion = useMemo(
     () => (stickersCount / STICKERS_TOTAL_COUNT) * 100,
     [stickersCount],
@@ -35,31 +19,51 @@ export default function Home() {
     [completion],
   );
   const stickerCountByCode = useMemo(() => {
-    const groups = Object.groupBy(userStickers, ({ code }) => code.slice(0, 3));
+    const groups = Object.groupBy(stickers ?? [], ({ code }) =>
+      code.slice(0, 3),
+    );
     return Object.entries(groups)
       .map(([code, stickers]) => [code, stickers.length])
       .sort((a, b) => b[1] - a[1]);
-  }, [userStickers]);
+  }, [stickers]);
 
   return (
-    <section>
-      <h1>Home</h1>
-      <p className={styles.searchLink}>
-        <Link to="/search">Search stickers</Link>
-      </p>
-      <p className={styles.searchLink}>
-        <Link to="/new">Register new stickers</Link>
-      </p>
+    <main className={styles.page}>
+      <h1>Booklet</h1>
+      <Link className={styles.search} to="/search">
+        Search stickers
+      </Link>
 
-      <p className={styles.count}>
-        {stickersCount} of {STICKERS_TOTAL_COUNT} stickers (
-        {completion.toFixed(2)}%)
-      </p>
-      <div className={styles.progress} style={completionStyle}>
-        <div className={styles.progressBar}></div>
-      </div>
+      <section className={styles.completion}>
+        <h2>Completion</h2>
+        <span></span>
+        <span>
+          {stickersCount} of {STICKERS_TOTAL_COUNT} -- {completion.toFixed(1)}%
+        </span>
+        <div className={styles.progress} style={completionStyle}>
+          <div className={styles.bar}></div>
+        </div>
+      </section>
 
-      <StickersCountTable stickerCountByCode={stickerCountByCode} />
-    </section>
+      <section className={styles.count}>
+        <h2>Stickers count by code</h2>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>#</th>
+            </tr>
+          </thead>
+          <tbody>
+            {stickerCountByCode.map(([code, count]) => (
+              <tr key={code}>
+                <td>{code}</td>
+                <td>{count}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+    </main>
   );
 }
