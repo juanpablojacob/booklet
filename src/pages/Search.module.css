@@ -1,5 +1,5 @@
 .page {
-  width: 1200px;
+  width: 800px;
   margin: 40px auto;
 }
 
@@ -26,11 +26,11 @@
   display: grid;
   row-gap: 32px;
   column-gap: 16px;
-  grid-template-columns: repeat(10, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 }
 
 .sticker {
-  height: 120px;
+  height: 160px;
   background-color: var(--color-white-1);
   border-radius: 16px;
   padding: 16px;
@@ -46,5 +46,13 @@
   flex-direction: column;
   gap: 4px;
   align-items: center;
-  color: #6a994e;
+  color: var(--color-green-1);
+}
+
+.repeated {
+  border-radius: 80px;
+  padding: 4px 16px;
+  font-size: 12px;
+  line-height: 16px;
+  background-color: var(--color-yellow-1);
 }

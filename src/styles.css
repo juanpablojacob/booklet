@@ -8,15 +8,17 @@
 :root {
   font-size: 16px;
   line-height: 20px;
-  font-family: sans-serif;
+  font-family: monospace;
 
   --color-white-1: #ffffff;
   --color-white-2: #f5f5f5;
   --color-grey-1: #dfdfdf;
   --color-black-1: #303030;
   --color-black-2: #4d4d4d;
-  --color-primary-1: #c4e2f5;
-  --color-primary-4: #2c5ead;
+  --color-blue-1: #2c5ead;
+  --color-green-1: #6a994e;
+  --color-yellow-1: #fadd00;
+  --color-red-1: #ffcad4;
 }
 
 body {
@@ -39,10 +41,10 @@ h2 {
 
 a {
   text-decoration: none;
-  color: var(--color-primary-4);
+  color: var(--color-blue-1);
 }
 
-input[type="text"] {
+input[type='text'] {
   all: unset;
   font-size: 14px;
   line-height: 20px;
@@ -68,9 +70,9 @@ button:disabled {
   opacity: 0.6;
 }
 
-input[type="text"]:focus,
+input[type='text']:focus,
 button:focus {
-  border-color: var(--color-primary-4);
+  border-color: var(--color-blue-1);
 }
 
 ul {

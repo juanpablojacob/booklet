@@ -18,5 +18,10 @@
     "@vitejs/plugin-react": "6.0.2",
     "prettier": "3.8.4",
     "vite": "8.0.16"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 120,
+    "trailingComma": "none"
   }
 }

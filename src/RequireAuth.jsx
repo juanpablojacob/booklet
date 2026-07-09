@@ -1,7 +1,12 @@
-import { Navigate } from "react-router";
+import { Navigate } from 'react-router';
+
+import useAuth from './hooks/useAuth';
 
 export default function RequireAuth({ children }) {
-  const user = sessionStorage.getItem("BOOKLET_USER");
-  if (!user) return <Navigate to="/login" replace />;
+  const { getUser } = useAuth();
+  const user = getUser();
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
   return children;
 }

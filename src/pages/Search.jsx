@@ -1,13 +1,13 @@
-import { useMemo, useState } from "react";
-import { Link } from "react-router";
+import { useMemo, useState } from 'react';
+import { Link } from 'react-router';
 
-import { supabase } from "../utils/supabase";
-import { getUser } from "../utils/user";
-import stickers from "../data/stickers";
-import useStickers from "../hooks/useStickers";
-import useSaveSticker from "../hooks/useSaveSticker";
+import supabase from '../utils/supabase';
+import stickers from '../data/stickers';
+import useStickers from '../hooks/useStickers';
+import useSaveSticker from '../hooks/useSaveSticker';
+import { formatCode } from '../utils/format';
 
-import styles from "./Search.module.css";
+import styles from './Search.module.css';
 
 function CheckIcon() {
   return (
@@ -32,7 +32,7 @@ export default function Search() {
   const { data: userStickers } = useStickers();
   const { mutate: saveSticker } = useSaveSticker();
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
 
   const filtered = useMemo(() => {
     if (!search || search.length < 2) return [];
@@ -41,6 +41,7 @@ export default function Search() {
       .map((code) => ({
         code,
         obtained: userStickers.map((s) => s.code).includes(code),
+        repeated: userStickers.find((s) => s.code === code)?.repeated ?? 0
       }));
   }, [search, userStickers]);
 
@@ -69,26 +70,23 @@ export default function Search() {
         <ul className={styles.stickers}>
           {filtered.map((sticker) => (
             <li key={sticker.code} className={styles.sticker}>
-              <span>
-                {sticker.code.slice(0, 3)} {sticker.code.slice(3)}
-              </span>
+              <span>{formatCode(sticker.code)}</span>
               {sticker.obtained ? (
-                <section className={styles.obtained}>
-                  <CheckIcon />
-                  <span>Obtained</span>
-                </section>
+                <>
+                  <section className={styles.obtained}>
+                    <CheckIcon />
+                    <span>Obtained</span>
+                  </section>
+                  {sticker.repeated > 0 && <p className={styles.repeated}>Repeated x{sticker.repeated}</p>}
+                </>
               ) : (
-                <button onClick={() => saveSticker(sticker.code)}>
-                  GOT IT
-                </button>
+                <button onClick={() => saveSticker(sticker.code)}>Obtained</button>
               )}
             </li>
           ))}
         </ul>
       )}
-      {search && search.length > 1 && filtered.length === 0 && (
-        <p>No stickers found 🙁</p>
-      )}
+      {search && search.length > 1 && filtered.length === 0 && <p>No stickers found 🙁</p>}
     </main>
   );
 }
