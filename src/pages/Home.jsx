@@ -24,7 +24,7 @@ export default function Home() {
   }, [stickers]);
 
   const repeated = useMemo(
-    () => stickers.filter((s) => s.repeated > 0).sort((a, b) => a.code.localeCompare(b.code)),
+    () => stickers?.filter((s) => s.repeated > 0)?.sort((a, b) => a.code.localeCompare(b.code)) ?? [],
     [stickers]
   );
 
